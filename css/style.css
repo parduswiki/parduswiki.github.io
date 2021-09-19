@@ -1,0 +1,9 @@
+body{
+    background-color: #1A1A1D;
+    color: white;
+}
+
+::selection {
+    background-color: chocolate;
+
+}
