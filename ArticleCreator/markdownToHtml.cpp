@@ -57,7 +57,6 @@ Article MDProcessor(std::vector<std::string> file, std::string outputFileName){
       }
       std::string imageTitle = file[ind].substr(2,file[ind].find("]")-2);
       std::string imagePath = file[ind].substr(file[ind].find("$")+1, file[ind].length());
-      std::cout << imageTitle << " path: " << imagePath << " index: " << file[ind].find(ResimUzantisi) << " length: " << file[ind].length() << std::endl;
       outfile << "<img src=\"" << imagePath << "\">" << std::endl;
     }else if(file[ind].find("[") != std::string::npos){
       std::string linkTitle = file[ind].substr(1,file[ind].find("]")-1);
@@ -72,8 +71,19 @@ Article MDProcessor(std::vector<std::string> file, std::string outputFileName){
   outfile.close();
   return article;
 }
-
-int main(){
-  MDProcessor(getMD("deneme.md"),"deneme.html");
+std::vector<std::string>& Arguments()
+{
+    static std::vector<std::string> arguments;
+    return arguments;
+}
+int main(int argc, char* argv[])
+{
+  for (int i = 0; i < argc; ++i)
+  {
+      Arguments().push_back(argv[i]);
+  }
+  std::string MDPath = Arguments()[1];
+  std::string HTMLPath = Arguments()[2];
+  MDProcessor(getMD(MDPath),HTMLPath);
   return 0;
 }
